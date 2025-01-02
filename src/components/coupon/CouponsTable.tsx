@@ -1,4 +1,6 @@
 import { CouponTypes } from "@/api/coupons/getCoupons";
+import { Pencil, Trash2 } from "lucide-react";
+import { Button } from "../ui/button";
 import {
   Table,
   TableBody,
@@ -7,12 +9,19 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 interface CouponTableProps {
   coupons: CouponTypes[];
+  handleDelete: (id: string) => Promise<void>;
 }
 
-const CouponsTable = ({ coupons }: CouponTableProps) => {
+const CouponsTable = ({ coupons, handleDelete }: CouponTableProps) => {
   return (
     <Table dir="rtl">
       <TableHeader>
@@ -49,6 +58,44 @@ const CouponsTable = ({ coupons }: CouponTableProps) => {
                   غير صالح
                 </p>
               )}
+            </TableCell>
+            <TableCell>
+              <TooltipProvider>
+                {" "}
+                {/* Adjust styling as needed */}
+                {/* Edit Icon */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="ghost" className="p-2">
+                      <Pencil
+                        size={20}
+                        className="text-gray-500 hover:text-gray-700"
+                      />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>تعديل</p>
+                  </TooltipContent>
+                </Tooltip>
+                {/* Delete Icon */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      onClick={() => handleDelete(coupon._id)}
+                      variant="ghost"
+                      className="p-2"
+                    >
+                      <Trash2
+                        size={20}
+                        className="text-gray-500 hover:text-gray-700"
+                      />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>ازالة</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </TableCell>
           </TableRow>
         ))}
