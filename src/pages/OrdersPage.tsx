@@ -2,9 +2,9 @@ import React from "react";
 
 const OrdersPage = () => {
   return (
-    <div>
+    <div className="w-full">
       {" "}
-      <h1 className="text-3xl font-bold">الطلبات</h1>
+      <h1 className="text-3xl font-bold text-right">الطلبات</h1>
     </div>
   );
 };

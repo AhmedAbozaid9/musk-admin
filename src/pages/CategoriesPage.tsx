@@ -1,8 +1,8 @@
 const CategoriesPage = () => {
   return (
-    <div>
+    <div className="w-full">
       {" "}
-      <h1 className="text-3xl font-bold">الاقسام</h1>
+      <h1 className="text-3xl font-bold text-right">الاقسام</h1>
     </div>
   );
 };

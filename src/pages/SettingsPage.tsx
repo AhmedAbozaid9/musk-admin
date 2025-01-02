@@ -2,9 +2,9 @@ import React from "react";
 
 const SettingsPage = () => {
   return (
-    <div>
+    <div className="w-full">
       {" "}
-      <h1 className="text-3xl font-bold">الاعدادات</h1>
+      <h1 className="text-3xl font-bold text-right">الاعدادات</h1>
     </div>
   );
 };

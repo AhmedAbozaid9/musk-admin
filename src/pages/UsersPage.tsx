@@ -2,9 +2,9 @@ import React from "react";
 
 const UsersPage = () => {
   return (
-    <div>
+    <div className="w-full">
       {" "}
-      <h1 className="text-3xl font-bold">المستخدمين</h1>
+      <h1 className="text-3xl font-bold text-right">المستخدمين</h1>
     </div>
   );
 };
