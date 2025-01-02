@@ -5,7 +5,7 @@ const Layout = () => {
   return (
     <>
       <p className="px-12 pt-6 text-right text-4xl font-semibold">Musc</p>
-      <div className="flex max-lg:flex-col justify-end gap-8 p-10">
+      <div className="flex max-lg:flex-col-reverse justify-end gap-8 p-10">
         <Outlet />
         <Sidebar />
       </div>
