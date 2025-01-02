@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar";
 
 const Layout = () => {
   return (
-    <div className="flex justify-end gap-5 p-10">
+    <div className="flex justify-end gap-8 p-10">
       <Outlet />
       <Sidebar />
     </div>

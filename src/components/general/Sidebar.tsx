@@ -3,8 +3,6 @@ import { NavLink, useLocation } from "react-router-dom";
 import { sidebarContent } from "../../constants/general/sidebarItems";
 
 const Sidebar = () => {
-  const location = useLocation();
-
   const handleLogout = () => {
     // Handle logout
   };
