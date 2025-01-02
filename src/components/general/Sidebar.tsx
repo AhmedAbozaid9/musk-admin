@@ -9,7 +9,7 @@ const Sidebar = () => {
     // Handle logout
   };
   return (
-    <div>
+    <div className="flex flex-col gap-4 justify-end w-1/5">
       {sidebarContent.map((item) => (
         <NavLink
           to={item.slug}
@@ -28,10 +28,10 @@ const Sidebar = () => {
       ))}
       <button
         onClick={handleLogout}
-        className="text-[#EE2D47] border-2 border-[#EE2D47] py-4 px-8 rounded-md flex gap-3 items-center"
+        className="text-[#EE2D47] border-2 border-[#EE2D47] py-4 px-8 rounded-md flex gap-3 items-center justify-end"
       >
-        <LogOut />
         تسجيل الخروج
+        <LogOut />
       </button>
     </div>
   );
