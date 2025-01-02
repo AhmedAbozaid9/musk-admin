@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <div>
+    <div className="flex bg-pink-200">
       layout
       <Outlet />
     </div>
