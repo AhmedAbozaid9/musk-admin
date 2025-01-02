@@ -63,24 +63,26 @@ const CouponForm = ({ handleAddCoupon }: CouponFormProps) => {
               required
             />
           </div>
-          <div className="">
-            <Label>الخصم</Label>
-            <Input
-              {...register("discount")}
-              placeholder="أدخل الخصم"
-              className="w-full mt-2"
-              required
-            />
-          </div>
-          <div>
-            <Label>تاريخ الانتهاء</Label>
-            <Input
-              type="date"
-              value={date?.toISOString().split("T")[0]}
-              onChange={(e) => setDate(new Date(e.target.value))}
-              className="w-full mt-2"
-              required
-            />
+          <div className="flex gap-4">
+            <div className="w-full">
+              <Label>الخصم</Label>
+              <Input
+                {...register("discount")}
+                placeholder="أدخل الخصم"
+                className="w-full mt-2"
+                required
+              />
+            </div>
+            <div className="w-full">
+              <Label>تاريخ الانتهاء</Label>
+              <Input
+                type="date"
+                value={date?.toISOString().split("T")[0]}
+                onChange={(e) => setDate(new Date(e.target.value))}
+                className="w-full mt-2"
+                required
+              />
+            </div>
           </div>
         </form>
         <DialogFooter>

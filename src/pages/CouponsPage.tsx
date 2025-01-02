@@ -1,5 +1,7 @@
+import { addCoupon } from "@/api/coupons/addCoupon";
 import CouponForm from "@/components/coupon/CouponForm";
 import React from "react";
+import toast from "react-hot-toast";
 
 const CouponsPage = () => {
   const handleAddCoupon = async (
@@ -7,7 +9,12 @@ const CouponsPage = () => {
     discount: string,
     expire: string
   ) => {
-    console.log("Add coupon", code, discount, expire);
+    try {
+      await addCoupon(code, discount, expire);
+      toast.success("تمت الإضافة بنجاح");
+    } catch (error) {
+      toast.error("حدث خطأ ما");
+    }
   };
   return (
     <div className="text-right">
