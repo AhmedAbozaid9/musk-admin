@@ -1,10 +1,13 @@
+import Cookies from "js-cookie";
 import { LogOut } from "lucide-react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { sidebarContent } from "../../constants/general/sidebarItems";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const handleLogout = () => {
-    // Handle logout
+    Cookies.remove("musc-admin-token");
+    navigate("/login");
   };
   return (
     <div className="flex flex-col gap-4 justify-end w-full lg:w-1/5">
