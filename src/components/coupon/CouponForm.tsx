@@ -40,7 +40,7 @@ const CouponForm = ({ handleAddCoupon }: CouponFormProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="px-8 my-4 ">
+        <Button className="px-8 mt-8 mb-4 ">
           <Plus /> اضف كوبون
         </Button>
       </DialogTrigger>

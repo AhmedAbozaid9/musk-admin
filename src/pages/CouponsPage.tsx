@@ -1,10 +1,17 @@
 import { addCoupon } from "@/api/coupons/addCoupon";
+import { getCoupons } from "@/api/coupons/getCoupons";
 import CouponForm from "@/components/coupon/CouponForm";
 import CouponsTable from "@/components/coupon/CouponsTable";
-import React from "react";
+import Loading from "@/components/general/Loading";
+import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 const CouponsPage = () => {
+  const { data: coupons, isLoading } = useQuery({
+    queryKey: ["coupons"],
+    queryFn: getCoupons,
+  });
+  console.log(coupons);
   const handleAddCoupon = async (
     code: string,
     discount: string,
@@ -17,11 +24,16 @@ const CouponsPage = () => {
       toast.error("حدث خطأ ما");
     }
   };
+  if (isLoading) return <Loading />;
   return (
-    <div className="text-right">
+    <div className="text-right w-full">
       <h1 className="text-3xl font-bold">الكوبونات</h1>
       <CouponForm handleAddCoupon={handleAddCoupon} />
-      <CouponsTable />
+      {coupons && coupons.length > 0 ? (
+        <CouponsTable coupons={coupons} />
+      ) : (
+        <p>لا توجد كوبونات</p>
+      )}
     </div>
   );
 };
