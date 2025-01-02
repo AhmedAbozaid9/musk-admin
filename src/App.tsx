@@ -14,6 +14,7 @@ import UsersPage from "./pages/UsersPage";
 
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
 import Loading from "./components/general/Loading";
 import LoginPage from "./pages/LoginPage";
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/*" element={<ProtectedRoutes />} />
       </Routes>
+      <Toaster />
     </Router>
   );
 }
