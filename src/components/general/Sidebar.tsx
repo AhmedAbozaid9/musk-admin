@@ -7,7 +7,7 @@ const Sidebar = () => {
     // Handle logout
   };
   return (
-    <div className="flex flex-col gap-4 justify-end w-1/5">
+    <div className="flex flex-col gap-4 justify-end w-full lg:w-1/5">
       {sidebarContent.map((item) => (
         <NavLink
           to={item.slug}
