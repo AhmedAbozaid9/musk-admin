@@ -1,5 +1,6 @@
 import { addCoupon } from "@/api/coupons/addCoupon";
 import CouponForm from "@/components/coupon/CouponForm";
+import CouponsTable from "@/components/coupon/CouponsTable";
 import React from "react";
 import toast from "react-hot-toast";
 
@@ -20,6 +21,7 @@ const CouponsPage = () => {
     <div className="text-right">
       <h1 className="text-3xl font-bold">الكوبونات</h1>
       <CouponForm handleAddCoupon={handleAddCoupon} />
+      <CouponsTable />
     </div>
   );
 };
