@@ -1,8 +1,15 @@
+import { addCategory } from "@/api/categories/addCategory";
 import CategoryForm from "@/components/category/CategoryForm";
+import toast from "react-hot-toast";
 
 const CategoriesPage = () => {
   const handleAddCategory = async (title: string, image: File) => {
-    console.log(title, image);
+    try {
+      await addCategory(title, image);
+      toast.success("تم اضافة القسم");
+    } catch (error) {
+      toast.error("حدث خطاء ما");
+    }
   };
 
   return (

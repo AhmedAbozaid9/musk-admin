@@ -12,6 +12,7 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
+import { error } from "console";
 import { useForm } from "react-hook-form";
 import ImageInput from "../general/ImageInput";
 
@@ -25,13 +26,19 @@ interface CategoryFormValues {
 }
 
 const CategoryForm = ({ handleAddCategory }: CategoryFormProps) => {
-  const { register, handleSubmit, setValue } = useForm<CategoryFormValues>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { isSubmitting },
+  } = useForm<CategoryFormValues>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const onSubmit = (data: CategoryFormValues) => {
-    handleAddCategory(data.title, data.image);
+  const onSubmit = async (data: CategoryFormValues) => {
+    console.log("submitted");
+    await handleAddCategory(data.title, data.image);
   };
-
+  console.log(isSubmitting);
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -45,7 +52,7 @@ const CategoryForm = ({ handleAddCategory }: CategoryFormProps) => {
         </DialogHeader>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          id="coupon-form"
+          id="category-form"
           dir="rtl"
           className="flex flex-wrap gap-4 py-4"
         >
@@ -69,7 +76,11 @@ const CategoryForm = ({ handleAddCategory }: CategoryFormProps) => {
           </div>
         </form>
         <DialogFooter>
-          <Button form="coupon-form" type="submit">
+          <Button
+            disabled={isSubmitting || !selectedImage}
+            form="category-form"
+            type="submit"
+          >
             حفظ
           </Button>
         </DialogFooter>

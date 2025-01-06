@@ -37,7 +37,6 @@ const ImageInput = ({
         id="imageInput"
         className="hidden"
         onChange={handleImageChange}
-        required
       />
       {selectedImage ? (
         <div className="relative w-full flex flex-col items-center">
