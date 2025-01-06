@@ -1,4 +1,5 @@
 import { addCategory } from "@/api/categories/addCategory";
+import { deleteCategory } from "@/api/categories/deleteCategory";
 import { getCategories } from "@/api/categories/getCategories";
 import CategoryForm from "@/components/category/CategoryForm";
 import CategoryTable from "@/components/category/CategoryTable";
@@ -26,7 +27,15 @@ const CategoriesPage = () => {
     }
   };
   console.log(categories);
-  const handleDeleteCategory = async () => {};
+  const handleDeleteCategory = async (id: string) => {
+    try {
+      await deleteCategory(id);
+      toast.success("تم حذف القسم");
+      refetch();
+    } catch (err) {
+      toast.error("حدث خطاء ما");
+    }
+  };
   if (isLoading) {
     return <Loading />;
   }
