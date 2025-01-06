@@ -44,12 +44,12 @@ const CouponsPage = () => {
   return (
     <div className="text-right w-full">
       <h1 className="text-3xl font-bold">الكوبونات</h1>
-      <CouponForm handleAddCoupon={handleAddCoupon} />
+      {/* <CouponForm handleAddCoupon={handleAddCoupon} />
       {coupons && coupons.length > 0 ? (
         <CouponsTable handleDelete={handleDeleteCoupon} coupons={coupons} />
       ) : (
         <p>لا توجد كوبونات</p>
-      )}
+      )} */}
     </div>
   );
 };
