@@ -1,4 +1,4 @@
-import { Plus, X } from "lucide-react";
+import { Plus } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import {
@@ -12,7 +12,6 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
-import { error } from "console";
 import { useForm } from "react-hook-form";
 import ImageInput from "../general/ImageInput";
 
@@ -29,18 +28,22 @@ const CategoryForm = ({ handleAddCategory }: CategoryFormProps) => {
   const {
     register,
     handleSubmit,
+    reset,
     setValue,
     formState: { isSubmitting },
   } = useForm<CategoryFormValues>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const onSubmit = async (data: CategoryFormValues) => {
-    console.log("submitted");
     await handleAddCategory(data.title, data.image);
+    reset(); // Reset form fields
+    setSelectedImage(null); // Reset the selected image
+    setIsDialogOpen(false); // Close the dialog
   };
-  console.log(isSubmitting);
+
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Button className="px-8 mt-8 mb-4">
           <Plus /> اضف قسم
