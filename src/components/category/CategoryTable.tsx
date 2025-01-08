@@ -1,6 +1,6 @@
 import { CategoryTypes } from "@/api/categories/getCategories";
-import { CouponTypes } from "@/api/coupons/getCoupons";
 import { Pencil, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import {
   Table,
@@ -16,19 +16,38 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import CategoryForm from "./CategoryForm";
 
-interface CouponTableProps {
+interface CategoryTableProps {
   categories: CategoryTypes[];
+  handleEdit: (
+    id: string,
+    title: string,
+    image: File | string
+  ) => Promise<void>;
   handleDelete: (id: string) => Promise<void>;
 }
 
-const CategoryTable = ({ categories, handleDelete }: CouponTableProps) => {
+const CategoryTable = ({
+  categories,
+  handleDelete,
+  handleEdit,
+}: CategoryTableProps) => {
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategoryTypes | null>(null);
+  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+
+  const openEditForm = (category: CategoryTypes) => {
+    setSelectedCategory(category);
+    setIsEditFormOpen(true);
+  };
+
   return (
     <Table dir="rtl">
       <TableHeader>
         <TableRow>
           <TableHead className="font-medium text-right">الصورة</TableHead>
-          <TableHead className="font-medium text-right">الاسم </TableHead>
+          <TableHead className="font-medium text-right">الاسم</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -41,16 +60,16 @@ const CategoryTable = ({ categories, handleDelete }: CouponTableProps) => {
                 className="w-24 h-24 rounded-md object-cover"
               />
             </TableCell>
-            <TableCell className="lg:w-[80%]"> {category.title} </TableCell>
-
+            <TableCell className="lg:w-[80%]">{category.title}</TableCell>
             <TableCell>
               <TooltipProvider>
-                {" "}
-                {/* Adjust styling as needed */}
-                {/* Edit Icon */}
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="ghost" className="p-2">
+                    <Button
+                      onClick={() => openEditForm(category)}
+                      variant="ghost"
+                      className="p-2"
+                    >
                       <Pencil
                         size={20}
                         className="text-gray-500 hover:text-gray-700"
@@ -61,7 +80,6 @@ const CategoryTable = ({ categories, handleDelete }: CouponTableProps) => {
                     <p>تعديل</p>
                   </TooltipContent>
                 </Tooltip>
-                {/* Delete Icon */}
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
@@ -84,6 +102,16 @@ const CategoryTable = ({ categories, handleDelete }: CouponTableProps) => {
           </TableRow>
         ))}
       </TableBody>
+      {isEditFormOpen && selectedCategory && (
+        <CategoryForm
+          id={selectedCategory.id}
+          title={selectedCategory.title}
+          image={selectedCategory.image}
+          isOpen={isEditFormOpen}
+          setIsOpen={setIsEditFormOpen}
+          handleEditCategory={handleEdit}
+        />
+      )}
     </Table>
   );
 };

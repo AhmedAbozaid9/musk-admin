@@ -1,4 +1,3 @@
-import { Plus } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import {
@@ -7,7 +6,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -16,7 +14,17 @@ import { useForm } from "react-hook-form";
 import ImageInput from "../general/ImageInput";
 
 interface CategoryFormProps {
-  handleAddCategory: (title: string, image: File) => Promise<void>;
+  id?: string;
+  title?: string;
+  image?: string;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleAddCategory?: (title: string, image: File) => Promise<void>;
+  handleEditCategory?: (
+    id: string,
+    title: string,
+    image: File
+  ) => Promise<void>;
 }
 
 interface CategoryFormValues {
@@ -24,31 +32,43 @@ interface CategoryFormValues {
   image: File;
 }
 
-const CategoryForm = ({ handleAddCategory }: CategoryFormProps) => {
+const CategoryForm = ({
+  id,
+  title,
+  image,
+  isOpen,
+  setIsOpen,
+  handleAddCategory,
+  handleEditCategory,
+}: CategoryFormProps) => {
+  console.log(id);
   const {
     register,
     handleSubmit,
     reset,
     setValue,
     formState: { isSubmitting },
-  } = useForm<CategoryFormValues>();
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
+  } = useForm<CategoryFormValues>({});
+  const [selectedImage, setSelectedImage] = useState<string | null>(
+    image || null
+  );
   const onSubmit = async (data: CategoryFormValues) => {
-    await handleAddCategory(data.title, data.image);
+    if (handleAddCategory) {
+      await handleAddCategory(data.title, data.image);
+    }
+    if (handleEditCategory) {
+      console.log(data);
+      await handleEditCategory(id as string, data.title, data.image);
+    }
     reset(); // Reset form fields
     setSelectedImage(null); // Reset the selected image
-    setIsDialogOpen(false); // Close the dialog
+    setIsOpen(false); // Close the dialog
   };
 
+  console.log(title);
+
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger asChild>
-        <Button className="px-8 mt-8 mb-4">
-          <Plus /> اضف قسم
-        </Button>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={() => setIsOpen(false)}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>اضف قسم</DialogTitle>
@@ -62,6 +82,7 @@ const CategoryForm = ({ handleAddCategory }: CategoryFormProps) => {
           <div className="w-full">
             <Label>عنوان القسم</Label>
             <Input
+              defaultValue={title}
               {...register("title")}
               placeholder="أدخل العنوان"
               className="w-full mt-2"
