@@ -1,6 +1,6 @@
-import { addCategory } from "@/api/categories/addCategory";
 import { deleteCategory } from "@/api/categories/deleteCategory";
 import { editCategory } from "@/api/categories/editCategory";
+import { addSubCategory } from "@/api/subCategories/addSubCategory";
 import { getSubCategories } from "@/api/subCategories/getSubCategories";
 import CategoryForm from "@/components/category/CategoryForm";
 import CategoryTable from "@/components/category/CategoryTable";
@@ -26,7 +26,7 @@ const SubCategoriesPage = () => {
 
   const handleAddCategory = async (title: string, image: File) => {
     try {
-      await addCategory(title, image);
+      await addSubCategory(categoryId as string, title, image);
       toast.success("تم اضافة القسم");
       refetch();
     } catch (error) {
@@ -39,7 +39,6 @@ const SubCategoriesPage = () => {
     title: string,
     image: File | string
   ) => {
-    console.log(id, title, image);
     try {
       await editCategory(id, title, image);
       toast.success("تم تعديل القسم");
