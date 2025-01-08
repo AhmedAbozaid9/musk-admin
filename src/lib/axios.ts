@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 function authRequestInterceptor(config: {
   headers: { token: string; Accept: string };
 }) {
-  const token = Cookies.get("musc-token");
+  const token = Cookies.get("musc-admin-token");
   if (token) {
     config.headers.token = token;
   }
