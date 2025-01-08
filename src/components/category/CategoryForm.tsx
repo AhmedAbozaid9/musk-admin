@@ -65,8 +65,6 @@ const CategoryForm = ({
     setIsOpen(false); // Close the dialog
   };
 
-  console.log(title);
-
   return (
     <Dialog open={isOpen} onOpenChange={() => setIsOpen(false)}>
       <DialogContent className="sm:max-w-[425px]">

@@ -6,7 +6,7 @@ export interface CategoryTypes {
   id: string;
 }
 
-export const getCategories = async (): Promise<CategoryTypes[]> => {
+export const getSubCategories = async (): Promise<CategoryTypes[]> => {
   const { data } = await axios.get("/getAllSubCategories");
   return data.result;
 };

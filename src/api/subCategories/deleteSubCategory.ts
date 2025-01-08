@@ -1,6 +1,6 @@
 import { axios } from "@/lib/axios";
 
-export const deleteCategory = async (id: string) => {
+export const deleteSubCategory = async (id: string) => {
   const response = await axios.delete(`deleteSubCategoryById/${id}`);
   return response.data;
 };

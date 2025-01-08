@@ -1,6 +1,6 @@
 import { axios } from "@/lib/axios";
 
-export const editCategory = async (
+export const editSubCategory = async (
   id: string,
   title: string,
   image: File | string
