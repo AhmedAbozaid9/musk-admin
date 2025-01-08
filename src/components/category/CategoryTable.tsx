@@ -1,6 +1,7 @@
 import { CategoryTypes } from "@/api/categories/getCategories";
 import { Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import {
   Table,
@@ -33,6 +34,7 @@ const CategoryTable = ({
   handleDelete,
   handleEdit,
 }: CategoryTableProps) => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryTypes | null>(null);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
@@ -52,7 +54,11 @@ const CategoryTable = ({
       </TableHeader>
       <TableBody>
         {categories.map((category) => (
-          <TableRow key={category.id}>
+          <TableRow
+            className="cursor-pointer"
+            onClick={() => navigate(`/categories/${category.id}`)}
+            key={category.id}
+          >
             <TableCell>
               <img
                 src={category.image}
@@ -66,7 +72,10 @@ const CategoryTable = ({
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
-                      onClick={() => openEditForm(category)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openEditForm(category);
+                      }}
                       variant="ghost"
                       className="p-2"
                     >
@@ -83,7 +92,10 @@ const CategoryTable = ({
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
-                      onClick={() => handleDelete(category.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(category.id);
+                      }}
                       variant="ghost"
                       className="p-2"
                     >
