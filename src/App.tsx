@@ -1,4 +1,5 @@
 import {
+  Navigate,
   Route,
   BrowserRouter as Router,
   Routes,
@@ -53,6 +54,8 @@ function ProtectedRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
+        <Route index element={<Navigate to="categories" replace />} />
+
         <Route path="categories" element={<CategoriesPage />} />
         <Route path="categories/:id" element={<SubCategoriesPage />} />
         <Route path="brands" element={<BrandsPage />} />
