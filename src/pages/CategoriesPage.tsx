@@ -10,9 +10,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const CategoriesPage = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   const {
     data: categories,
     refetch,
@@ -76,6 +78,7 @@ const CategoriesPage = () => {
           handleEdit={handleEditCategory}
           handleDelete={handleDeleteCategory}
           categories={categories}
+          handleNavigate={(id) => navigate(`/categories/${id}`)}
         />
       ) : (
         <p>لا توجد اقسام</p>

@@ -1,7 +1,6 @@
 import { CategoryTypes } from "@/api/categories/getCategories";
 import { Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import {
   Table,
@@ -22,10 +21,12 @@ import CategoryForm from "./CategoryForm";
 interface CategoryTableProps {
   categories: CategoryTypes[];
   handleEdit: (
-    id: string,
+    _id: string,
     title: string,
     image: File | string
   ) => Promise<void>;
+  handleNavigate: (id: string) => void;
+
   handleDelete: (id: string) => Promise<void>;
 }
 
@@ -33,10 +34,11 @@ const CategoryTable = ({
   categories,
   handleDelete,
   handleEdit,
+  handleNavigate,
 }: CategoryTableProps) => {
-  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryTypes | null>(null);
+  console.log(selectedCategory);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 
   const openEditForm = (category: CategoryTypes) => {
@@ -56,8 +58,8 @@ const CategoryTable = ({
         {categories.map((category) => (
           <TableRow
             className="cursor-pointer"
-            onClick={() => navigate(`/categories/${category.id}`)}
-            key={category.id}
+            onClick={() => handleNavigate(category._id)}
+            key={category._id}
           >
             <TableCell>
               <img
@@ -94,7 +96,7 @@ const CategoryTable = ({
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleDelete(category.id);
+                        handleDelete(category._id);
                       }}
                       variant="ghost"
                       className="p-2"
@@ -116,7 +118,7 @@ const CategoryTable = ({
       </TableBody>
       {isEditFormOpen && selectedCategory && (
         <CategoryForm
-          id={selectedCategory.id}
+          id={selectedCategory._id}
           title={selectedCategory.title}
           image={selectedCategory.image}
           isOpen={isEditFormOpen}

@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SubCategoriesPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,8 +21,10 @@ const SubCategoriesPage = () => {
     isLoading,
   } = useQuery({
     queryKey: ["subCategories", categoryId],
-    queryFn: getSubCategories,
+    queryFn: () => getSubCategories(categoryId as string),
   });
+
+  const navigate = useNavigate();
 
   const handleAddCategory = async (title: string, image: File) => {
     try {
@@ -40,6 +42,7 @@ const SubCategoriesPage = () => {
     image: File | string
   ) => {
     try {
+      console.log(id, title, image);
       await editCategory(id, title, image);
       toast.success("تم تعديل القسم");
       refetch();
@@ -62,7 +65,6 @@ const SubCategoriesPage = () => {
   }
   return (
     <div className="w-full text-right">
-      {" "}
       <h1 className="text-3xl font-bold text-right"> الاقسام الفرعية</h1>
       <Button onClick={() => setIsOpen(true)} className="px-8 mt-8 mb-4">
         <Plus /> اضف قسم
@@ -74,6 +76,7 @@ const SubCategoriesPage = () => {
       />
       {categories && categories.length > 0 ? (
         <CategoryTable
+          handleNavigate={(id) => navigate(`/sub-categories/${id}`)}
           handleEdit={handleEditCategory}
           handleDelete={handleDeleteCategory}
           categories={categories}

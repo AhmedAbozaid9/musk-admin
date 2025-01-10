@@ -3,8 +3,8 @@ import React from "react";
 import { UseFormSetValue } from "react-hook-form";
 
 interface ImageInputProps {
-  selectedImage: string | null;
-  setSelectedImage: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedImage: File | null;
+  setSelectedImage: React.Dispatch<React.SetStateAction<File | null>>;
   register: any;
   setValue: UseFormSetValue<any>;
 }
@@ -18,14 +18,14 @@ const ImageInput = ({
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setSelectedImage(URL.createObjectURL(file));
-      setValue("image", file); // Update the form value
+      setSelectedImage(file);
+      setValue("image", file);
     }
   };
 
   const removeImage = () => {
     setSelectedImage(null);
-    setValue("image", null as unknown as File); // Clear the form value
+    setValue("image", null as unknown as File);
   };
 
   return (
@@ -41,7 +41,7 @@ const ImageInput = ({
       {selectedImage ? (
         <div className="relative w-full flex flex-col items-center">
           <img
-            src={selectedImage}
+            src={selectedImage ? URL.createObjectURL(selectedImage) : undefined}
             alt="Selected"
             className="w-full h-40 object-cover rounded-lg border-2 border-black"
           />

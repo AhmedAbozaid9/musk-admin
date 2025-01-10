@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -41,7 +41,7 @@ const CategoryForm = ({
   handleAddCategory,
   handleEditCategory,
 }: CategoryFormProps) => {
-  console.log(id);
+  console.log("id", id);
   const {
     register,
     handleSubmit,
@@ -49,22 +49,32 @@ const CategoryForm = ({
     setValue,
     formState: { isSubmitting },
   } = useForm<CategoryFormValues>({});
-  const [selectedImage, setSelectedImage] = useState<string | null>(
-    image || null
-  );
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
+  console.log(selectedImage);
   const onSubmit = async (data: CategoryFormValues) => {
     if (handleAddCategory) {
       await handleAddCategory(data.title, data.image);
     }
     if (handleEditCategory) {
-      console.log(data);
-      await handleEditCategory(id as string, data.title, data.image);
+      await handleEditCategory(id as string, data.title, selectedImage as File);
     }
-    reset(); // Reset form fields
-    setSelectedImage(null); // Reset the selected image
-    setIsOpen(false); // Close the dialog
+    reset();
+    setSelectedImage(null);
+    setIsOpen(false);
   };
 
+  useEffect(() => {
+    if (image && typeof image === "string") {
+      fetch(image)
+        .then((res) => res.blob())
+        .then((blob) =>
+          setSelectedImage(
+            new File([blob], "existing-image.jpg", { type: blob.type })
+          )
+        );
+    }
+  }, [image]);
   return (
     <Dialog open={isOpen} onOpenChange={() => setIsOpen(false)}>
       <DialogContent className="sm:max-w-[425px]">

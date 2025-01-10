@@ -3,7 +3,7 @@ import { axios } from "@/lib/axios";
 export interface CategoryTypes {
   title: string;
   image: string;
-  id: string;
+  _id: string;
 }
 
 export const getCategories = async (): Promise<CategoryTypes[]> => {
