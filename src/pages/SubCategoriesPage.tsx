@@ -76,7 +76,7 @@ const SubCategoriesPage = () => {
       />
       {categories && categories.length > 0 ? (
         <CategoryTable
-          handleNavigate={(id) => navigate(`/sub-categories/${id}`)}
+          handleNavigate={(id) => navigate(`/products/${id}`)}
           handleEdit={handleEditCategory}
           handleDelete={handleDeleteCategory}
           categories={categories}
