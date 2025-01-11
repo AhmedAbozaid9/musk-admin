@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import ImageInput from "../general/ImageInput";
+import MultiImageInput from "../general/MultiImageInput";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -36,6 +37,7 @@ const ProductForm = ({
   handleEditProduct,
 }: ProductFormProps) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const {
     register,
     handleSubmit,
@@ -183,12 +185,9 @@ const ProductForm = ({
           {/* Image Gallery */}
           <div className="w-full">
             <Label>صور إضافية</Label>
-            <Input
-              type="file"
-              accept="image/*"
-              multiple
-              {...register("images")}
-              className="w-full mt-2"
+            <MultiImageInput
+              selectedImages={selectedImages}
+              setSelectedImages={setSelectedImages}
             />
           </div>
 

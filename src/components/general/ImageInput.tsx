@@ -1,6 +1,5 @@
 import { X } from "lucide-react";
-import React from "react";
-import { UseFormSetValue } from "react-hook-form";
+import React, { useState } from "react";
 
 interface ImageInputProps {
   selectedImage: File | null;
@@ -22,6 +21,7 @@ const ImageInput = ({ selectedImage, setSelectedImage }: ImageInputProps) => {
   return (
     <div className="mt-2">
       <input
+        key={selectedImage ? "imageInputWithImage" : "imageInputWithoutImage"}
         type="file"
         accept="image/*"
         id="imageInput"
