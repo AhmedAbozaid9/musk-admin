@@ -1,11 +1,36 @@
+import { addProduct, ProductTypes } from "@/api/products/addProduct";
+import { getProducts } from "@/api/products/getProducts";
+import ProductForm from "@/components/product/ProductForm";
+import ProductTable from "@/components/product/ProductTable";
 import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 
 const ProductsPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { id: subCategoryId } = useParams();
+
+  const { data: products } = useQuery({
+    queryKey: ["products", subCategoryId],
+    queryFn: () => getProducts(subCategoryId as string),
+  });
+
+  const handleAddProduct = async (product: ProductTypes) => {
+    try {
+      const response = await addProduct(product);
+    } catch (err) {
+      toast.error("حدث خطأ ما");
+    }
+  };
+  const handleEdit = async (product: ProductTypes) => {
+    console.log(product);
+  };
+  const handleDelete = async (id: string) => {
+    console.log(id);
+  };
 
   return (
     <div className="w-full text-right">
@@ -13,21 +38,20 @@ const ProductsPage = () => {
       <Button onClick={() => setIsOpen(true)} className="px-8 mt-8 mb-4">
         <Plus /> اضف منتج
       </Button>
-      {/* <CategoryForm
+      <ProductForm
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        handleAddCategory={handleAddCategory}
+        handleAddProduct={handleAddProduct}
       />
-      {categories && categories.length > 0 ? (
-        <CategoryTable
-          handleNavigate={(id) => navigate(`${id}`)}
-          handleEdit={handleEditCategory}
-          handleDelete={handleDeleteCategory}
-          categories={categories}
+      {products && products.length > 0 ? (
+        <ProductTable
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+          products={products}
         />
       ) : (
         <p>لا توجد اقسام</p>
-      )} */}
+      )}
     </div>
   );
 };
