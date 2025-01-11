@@ -5,33 +5,23 @@ import { UseFormSetValue } from "react-hook-form";
 interface ImageInputProps {
   selectedImage: File | null;
   setSelectedImage: React.Dispatch<React.SetStateAction<File | null>>;
-  register: any;
-  setValue: UseFormSetValue<any>;
 }
 
-const ImageInput = ({
-  selectedImage,
-  setSelectedImage,
-  register,
-  setValue,
-}: ImageInputProps) => {
+const ImageInput = ({ selectedImage, setSelectedImage }: ImageInputProps) => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       setSelectedImage(file);
-      setValue("image", file);
     }
   };
 
   const removeImage = () => {
     setSelectedImage(null);
-    setValue("image", null as unknown as File);
   };
 
   return (
     <div className="mt-2">
       <input
-        {...register("image")}
         type="file"
         accept="image/*"
         id="imageInput"

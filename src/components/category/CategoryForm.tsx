@@ -46,7 +46,6 @@ const CategoryForm = ({
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { isSubmitting },
   } = useForm<CategoryFormValues>({});
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -54,7 +53,7 @@ const CategoryForm = ({
   console.log(selectedImage);
   const onSubmit = async (data: CategoryFormValues) => {
     if (handleAddCategory) {
-      await handleAddCategory(data.title, data.image);
+      await handleAddCategory(data.title, selectedImage as File);
     }
     if (handleEditCategory) {
       await handleEditCategory(id as string, data.title, selectedImage as File);
@@ -102,8 +101,6 @@ const CategoryForm = ({
             <ImageInput
               selectedImage={selectedImage}
               setSelectedImage={setSelectedImage}
-              register={register}
-              setValue={setValue}
             />
           </div>
         </form>
