@@ -30,6 +30,7 @@ const CategoriesPage = () => {
       toast.success("تم اضافة القسم");
       refetch();
     } catch (error) {
+      console.log(error);
       toast.error("حدث خطاء ما");
     }
   };
@@ -45,6 +46,7 @@ const CategoriesPage = () => {
       toast.success("تم تعديل القسم");
       refetch();
     } catch (error) {
+      console.log(error);
       toast.error("حدث خطاء ما");
     }
   };
@@ -55,6 +57,8 @@ const CategoriesPage = () => {
       toast.success("تم حذف القسم");
       refetch();
     } catch (err) {
+      console.log(err);
+
       toast.error("حدث خطاء ما");
     }
   };

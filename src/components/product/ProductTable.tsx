@@ -1,13 +1,12 @@
-import { ProductTypes } from "@/api/products/addProduct";
-import React from "react";
+// import { ProductTypes } from "@/api/products/addProduct";
 
-interface ProductTableProps {
-  handleEdit: (product: ProductTypes) => void;
-  handleDelete: (id: string) => void;
-  products: ProductTypes[];
-}
+// interface ProductTableProps {
+//   handleEdit: (product: ProductTypes) => void;
+//   handleDelete: (id: string) => void;
+//   products: ProductTypes[];
+// }
 
-const ProductTable = ({}: ProductTableProps) => {
+const ProductTable = () => {
   return <div>ProductTable</div>;
 };
 

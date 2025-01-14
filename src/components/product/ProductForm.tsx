@@ -1,6 +1,6 @@
 import { ProductTypes } from "@/api/products/addProduct";
 import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import ImageInput from "../general/ImageInput";
 import MultiImageInput from "../general/MultiImageInput";
@@ -34,14 +34,12 @@ const ProductForm = ({
   isOpen,
   setIsOpen,
   handleAddProduct,
-  handleEditProduct,
 }: ProductFormProps) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const {
     register,
     handleSubmit,
-    control,
     formState: { isSubmitting },
   } = useForm<ProductTypes>();
 

@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 
 interface ImageInputProps {
   selectedImage: File | null;

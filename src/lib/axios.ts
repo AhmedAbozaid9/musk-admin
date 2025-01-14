@@ -16,7 +16,7 @@ export const axios = Axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-axios.interceptors.request.use(authRequestInterceptor as any);
+axios.interceptors.request.use(authRequestInterceptor as never);
 
 axios.interceptors.response.use(
   (response) => {

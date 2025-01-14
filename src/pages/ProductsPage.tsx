@@ -1,36 +1,37 @@
 import { addProduct, ProductTypes } from "@/api/products/addProduct";
-import { getProducts } from "@/api/products/getProducts";
+// import { getProducts } from "@/api/products/getProducts";
 import ProductForm from "@/components/product/ProductForm";
-import ProductTable from "@/components/product/ProductTable";
+// import ProductTable from "@/components/product/ProductTable";
 import { Button } from "@/components/ui/button";
-import { useQuery } from "@tanstack/react-query";
+// import { useQuery } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 const ProductsPage = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { id: subCategoryId } = useParams();
+  // const { id: subCategoryId } = useParams();
 
-  const { data: products } = useQuery({
-    queryKey: ["products", subCategoryId],
-    queryFn: () => getProducts(subCategoryId as string),
-  });
+  // const { data: products } = useQuery({
+  //   queryKey: ["products", subCategoryId],
+  //   queryFn: () => getProducts(subCategoryId as string),
+  // });
 
   const handleAddProduct = async (product: ProductTypes) => {
     try {
-      const response = await addProduct(product);
+      await addProduct(product);
     } catch (err) {
+      console.log(err);
       toast.error("حدث خطأ ما");
     }
   };
-  const handleEdit = async (product: ProductTypes) => {
-    console.log(product);
-  };
-  const handleDelete = async (id: string) => {
-    console.log(id);
-  };
+  // const handleEdit = async (product: ProductTypes) => {
+  //   console.log(product);
+  // };
+  // const handleDelete = async (id: string) => {
+  //   console.log(id);
+  // };
 
   return (
     <div className="w-full text-right">
@@ -43,7 +44,7 @@ const ProductsPage = () => {
         setIsOpen={setIsOpen}
         handleAddProduct={handleAddProduct}
       />
-      {products && products.length > 0 ? (
+      {/* {products && products.length > 0 ? (
         <ProductTable
           handleEdit={handleEdit}
           handleDelete={handleDelete}
@@ -51,7 +52,7 @@ const ProductsPage = () => {
         />
       ) : (
         <p>لا توجد اقسام</p>
-      )}
+      )} */}
     </div>
   );
 };
