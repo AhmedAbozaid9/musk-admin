@@ -24,15 +24,17 @@ const ProductsPage = () => {
     imageCover: File,
     images: File[],
   ) => {
-    console.log(product);
     try {
       if (typeof product.colors === "string") {
-        await addProduct({
-          ...product,
-          imageCover,
-          images,
-          colors: product.colors.split(","),
-        });
+        await addProduct(
+          {
+            ...product,
+            imageCover,
+            images,
+            colors: product.colors.split(","),
+          },
+          subCategoryId as string,
+        );
       }
       await refetch();
     } catch (err) {

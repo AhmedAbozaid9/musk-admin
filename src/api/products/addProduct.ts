@@ -16,11 +16,14 @@ export interface ProductTypes {
   };
 }
 
-export const addProduct = async (product: ProductTypes) => {
+export const addProduct = async (
+  product: ProductTypes,
+  subCategory: string,
+) => {
   console.log(product);
   const response = await axios.post(
     "addProduct",
-    { ...product },
+    { ...product, subCategory },
     {
       headers: {
         "Content-Type": "multipart/form-data",
