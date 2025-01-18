@@ -24,6 +24,9 @@ const MultiImageInput = ({
   return (
     <div className="mt-2">
       <input
+        key={
+          selectedImages[0] ? "imageInputWithImage" : "imageInputWithoutImage"
+        }
         type="file"
         accept="image/*"
         id="multiImageInput"

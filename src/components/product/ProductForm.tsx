@@ -1,6 +1,6 @@
 import { ProductTypes } from "@/api/products/addProduct";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 import ImageInput from "../general/ImageInput";
 import MultiImageInput from "../general/MultiImageInput";
@@ -22,11 +22,18 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
+import { useQuery } from "@tanstack/react-query";
+import { getCategories } from "@/api/categories/getCategories.ts";
+import { getSubCategories } from "@/api/subCategories/getSubCategories.ts";
 
 interface ProductFormProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleAddProduct?: (product: ProductTypes) => Promise<void>;
+  handleAddProduct?: (
+    product: ProductTypes,
+    imageCover: File,
+    Images: File[],
+  ) => Promise<void>;
   handleEditProduct?: (product: ProductTypes) => Promise<void>;
 }
 
@@ -37,15 +44,30 @@ const ProductForm = ({
 }: ProductFormProps) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
+
   const {
     register,
     handleSubmit,
+    control,
     formState: { isSubmitting },
   } = useForm<ProductTypes>();
 
+  const [selectedCategory, setSelectedCategory] = useState<null | string>(null);
+
+  const { data: categories } = useQuery({
+    queryKey: ["categories"],
+    queryFn: getCategories,
+  });
+  const { data: subCategories } = useQuery({
+    queryKey: ["subCategories", selectedCategory],
+    queryFn: () => getSubCategories(selectedCategory as unknown as string),
+    enabled: !!selectedCategory,
+    staleTime: 0,
+  });
+
   const onSubmit = (data: ProductTypes) => {
     if (handleAddProduct) {
-      handleAddProduct(data);
+      handleAddProduct(data, selectedImage as File, selectedImages);
     }
   };
 
@@ -122,16 +144,31 @@ const ProductForm = ({
           {/* Category */}
           <div className="w-full">
             <Label>القسم</Label>
-            <Select dir="rtl">
-              <SelectTrigger className="mt-2">
-                <SelectValue placeholder="القسم " />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
-              </SelectContent>
-            </Select>
+            <Controller
+              control={control}
+              name={"category"}
+              render={({ field }) => (
+                <Select
+                  value={field.value}
+                  onValueChange={(value) => {
+                    setSelectedCategory(value);
+                    field.onChange(value);
+                  }}
+                  dir="rtl"
+                >
+                  <SelectTrigger className="mt-2">
+                    <SelectValue placeholder="القسم " />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories?.map((category) => (
+                      <SelectItem value={category._id}>
+                        {category.title}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
           </div>
 
           {/* SubCategory */}
@@ -142,9 +179,9 @@ const ProductForm = ({
                 <SelectValue placeholder="القسم الفرعي" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
+                {subCategories?.map((category) => (
+                  <SelectItem value={category._id}>{category.title}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

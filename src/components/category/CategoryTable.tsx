@@ -23,7 +23,7 @@ interface CategoryTableProps {
   handleEdit: (
     _id: string,
     title: string,
-    image: File | string
+    image: File | string,
   ) => Promise<void>;
   handleNavigate: (id: string) => void;
 
@@ -91,26 +91,29 @@ const CategoryTable = ({
                     <p>تعديل</p>
                   </TooltipContent>
                 </Tooltip>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(category._id);
-                      }}
-                      variant="ghost"
-                      className="p-2"
-                    >
-                      <Trash2
-                        size={20}
-                        className="text-gray-500 hover:text-gray-700"
-                      />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>ازالة</p>
-                  </TooltipContent>
-                </Tooltip>
+                {category._id !== "678c143dc55968df809476ed" &&
+                  category._id !== "678c1452c55968df809476f8" && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(category._id);
+                          }}
+                          variant="ghost"
+                          className="p-2"
+                        >
+                          <Trash2
+                            size={20}
+                            className="text-gray-500 hover:text-gray-700"
+                          />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>ازالة</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
               </TooltipProvider>
             </TableCell>
           </TableRow>

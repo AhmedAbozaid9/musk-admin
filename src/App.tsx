@@ -38,7 +38,6 @@ function ProtectedRoutes() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     if (!token) {
       navigate("/login");
