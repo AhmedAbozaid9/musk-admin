@@ -34,20 +34,19 @@ function App() {
 }
 
 function ProtectedRoutes() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const token = Cookies.get("musc-admin-token");
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (!token) {
       navigate("/login");
-      setLoading(false);
     } else {
-      setLoading(false);
+      setIsAuthenticated(true);
     }
-  }, [token]);
+  }, [token, isAuthenticated]);
 
-  if (loading) {
+  if (!isAuthenticated) {
     return <Loading />;
   }
 
