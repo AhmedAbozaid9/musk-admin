@@ -1,6 +1,7 @@
 import { CouponTypes } from "@/api/coupons/getCoupons";
 import { OrderTypes } from "@/api/orders/getOrders";
 import { Eye, Pencil, Trash2 } from "lucide-react";
+import React from "react";
 import { Button } from "../ui/button";
 import {
   Table,
@@ -19,9 +20,10 @@ import {
 
 interface CouponTableProps {
   orders: OrderTypes[];
+  handleSelectOrder: (order: OrderTypes) => void;
 }
 
-const OrdersTable = ({ orders }: CouponTableProps) => {
+const OrdersTable = ({ orders, handleSelectOrder }: CouponTableProps) => {
   return (
     <Table dir="rtl">
       <TableHeader>
@@ -61,7 +63,11 @@ const OrdersTable = ({ orders }: CouponTableProps) => {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="ghost" className="p-2">
+                    <Button
+                      onClick={() => handleSelectOrder(order)}
+                      variant="ghost"
+                      className="p-2"
+                    >
                       <Eye
                         size={20}
                         className="text-gray-500 hover:text-gray-700"
