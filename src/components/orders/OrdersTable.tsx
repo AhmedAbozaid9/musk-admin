@@ -1,7 +1,5 @@
-import { CouponTypes } from "@/api/coupons/getCoupons";
 import { OrderTypes } from "@/api/orders/getOrders";
-import { Eye, Pencil, Trash2 } from "lucide-react";
-import React from "react";
+import { Eye } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Table,
