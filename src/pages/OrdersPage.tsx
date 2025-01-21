@@ -1,4 +1,5 @@
 import { getOrders, OrderTypes } from "@/api/orders/getOrders";
+import { updateOrderStatus } from "@/api/orders/updateOrderStatus";
 import Loading from "@/components/general/Loading";
 import OrderDetails from "@/components/orders/OrderDetails";
 import OrdersTable from "@/components/orders/OrdersTable";
@@ -9,7 +10,11 @@ const OrdersPage = () => {
   const [selectedOrder, setSelectedOrder] = useState<OrderTypes | null>(null);
   const [showDetails, setShowDetails] = useState<boolean>(false);
 
-  const { data: orders, isLoading } = useQuery({
+  const {
+    data: orders,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["orders"],
     queryFn: getOrders,
   });
@@ -19,7 +24,13 @@ const OrdersPage = () => {
     setShowDetails(true);
   };
 
-  const handleChangeStatus = () => {};
+  const handleChangeStatus = async () => {
+    if (selectedOrder) {
+      await updateOrderStatus(selectedOrder?._id, "Paid");
+      setShowDetails(false);
+      refetch();
+    }
+  };
 
   if (isLoading) {
     return <Loading />;

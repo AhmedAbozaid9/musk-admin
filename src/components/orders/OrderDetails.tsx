@@ -93,7 +93,7 @@ const OrderDetails = ({
                 العودة
               </Button>
             </DialogClose>
-            <Button>تم التوصيل</Button>
+            <Button onClick={handleChangeStatus}>تم التوصيل</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
